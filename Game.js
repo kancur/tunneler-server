@@ -4,7 +4,7 @@ const { Player } = require('./Player');
 
 class Game {
   constructor() {
-    this.code = nanoid(6);
+    this.code = nanoid(1);
     this.seed = Math.floor(Math.random() * 1000000);
     this.width = 1200
     this.height = 600
@@ -12,8 +12,8 @@ class Game {
   }
 
   addPlayer(number){
-    const x = randomInt(70, this.width - 70);
-    const y = randomInt(70, this.height - 70);
+    const x = randomInt(70, this.width - 900);
+    const y = randomInt(70, this.height - 400);
     this.players[number] = new Player(number, x, y, 'up')
   }
 
