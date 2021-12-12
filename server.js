@@ -71,19 +71,12 @@ let gameCode = io.on("connection", (socket) => {
     }
   }
 
-  let time = Date.now();
-  let counter = 0;
   function handleGameStateUpdate({ playerNumber, ...data }) {
     //console.log('player number', playerNumber)
-    counter++;
     if (!game) return;
     if (Object.keys(game.players) <= 1) return;
-    if (Date.now() - time >= 1000) {
-      console.log(counter);
-      counter = 0;
-      time = Date.now();
-    }
-    game.players[playerNumber].updateState(data);
+    state[playerNumber] = data;
+    //game.players[playerNumber].updateState(data);
     //const newGameState = game.getState();
     //io.sockets.to(gameCode).emit("stateUpdate", newGameState);
   }
@@ -93,10 +86,18 @@ let gameCode = io.on("connection", (socket) => {
     io.sockets.to(gameCode).emit("pausedUpdate", pausedState);
   }
 
+  let time = Date.now();
+  let count = 0
   function startGameInterval() {
     const intervalId = setInterval(() => {
-      const newGameState = game.getState();
-      io.sockets.to(gameCode).emit("stateUpdate", newGameState);
+      count++;
+      if (Date.now() - time >= 1000) {
+        console.log(count,'state emits per second');
+        count = 0;
+        time = Date.now();
+      }
+      //const newGameState = game.getState();
+      io.sockets.to(gameCode).emit("stateUpdate", state);
     }, FRAME_TIME);
   }
 });
