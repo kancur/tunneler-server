@@ -67,16 +67,21 @@ let gameCode = io.on("connection", (socket) => {
           },
         ],
       });
-      startGameInterval();
+      //startGameInterval();
+      
     }
   }
-
-  function handleGameStateUpdate({ playerNumber, ...data }) {
-    //console.log('player number', playerNumber)
+  // pn = player number
+  function handleGameStateUpdate({ pN, ...data }) {
+    //console.log('player number', pN)
     if (!game) return;
     if (Object.keys(game.players) <= 1) return;
-    state[playerNumber] = data;
-    //game.players[playerNumber].updateState(data);
+    state[pN] = data;
+    // simulate missing packets
+    /* if (Math.random() > 0.5) {
+    } */
+    io.sockets.to(gameCode).emit("stateUpdate", state);
+    //game.players[pN].updateState(data);
     //const newGameState = game.getState();
     //io.sockets.to(gameCode).emit("stateUpdate", newGameState);
   }
@@ -88,7 +93,7 @@ let gameCode = io.on("connection", (socket) => {
 
   let time = Date.now();
   let count = 0
-  function startGameInterval() {
+/*   function startGameInterval() {
     const intervalId = setInterval(() => {
       count++;
       if (Date.now() - time >= 1000) {
@@ -99,7 +104,7 @@ let gameCode = io.on("connection", (socket) => {
       //const newGameState = game.getState();
       io.sockets.to(gameCode).emit("stateUpdate", state);
     }, FRAME_TIME);
-  }
+  } */
 });
 
 httpServer.listen(3100, () => {
