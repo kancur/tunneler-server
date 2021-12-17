@@ -14,7 +14,7 @@ const io = require("socket.io")(httpServer, {
 });
 
 const UPDATE_RATE = 18;
-const FRAME_TIME = 1000 / UPDATE_RATE;
+const FRAME_TIME = Math.round((1000 / UPDATE_RATE) * 100) / 100;
 
 const clientRoomNames = {};
 let state = {};
@@ -68,7 +68,6 @@ let gameCode = io.on("connection", (socket) => {
         ],
       });
       //startGameInterval();
-      
     }
   }
   // pn = player number
@@ -91,9 +90,11 @@ let gameCode = io.on("connection", (socket) => {
     io.sockets.to(gameCode).emit("pausedUpdate", pausedState);
   }
 
-  let time = Date.now();
-  let count = 0
+/*   let time = Date.now();
+  let count = 0 */
+
 /*   function startGameInterval() {
+    console.log('frametime:', FRAME_TIME)
     const intervalId = setInterval(() => {
       count++;
       if (Date.now() - time >= 1000) {
