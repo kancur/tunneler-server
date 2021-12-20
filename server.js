@@ -13,6 +13,7 @@ const io = require("socket.io")(httpServer, {
   },
 });
 
+const PORT = process.env.PORT || 3100;
 const UPDATE_RATE = 18;
 const FRAME_TIME = Math.round((1000 / UPDATE_RATE) * 100) / 100;
 
@@ -114,6 +115,6 @@ let gameCode = io.on("connection", (socket) => {
   } */
 });
 
-httpServer.listen(3100, () => {
+httpServer.listen(PORT, () => {
   console.log("listening on *:3100");
 });
