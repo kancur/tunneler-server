@@ -12,8 +12,8 @@ class Game {
   }
 
   addPlayer(number){
-    const x = randomInt(70, this.width - 900);
-    const y = randomInt(70, this.height - 400);
+    const x = randomInt(70, this.width - 1000);
+    const y = randomInt(70, this.height - 500);
     this.players[number] = new Player(number, x, y, 'up')
   }
 

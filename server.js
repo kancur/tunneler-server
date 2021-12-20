@@ -29,6 +29,12 @@ let gameCode = io.on("connection", (socket) => {
   socket.on("gameCodeInput", handleGameJoin);
   socket.on("updateGameState", handleGameStateUpdate);
   socket.on("updatePausedState", handleFocusUpdate);
+  socket.on("nextRound", handleNextRound);
+
+  function  handleNextRound() {
+    state = {};
+    io.sockets.to(gameCode).emit("stateUpdate", state);
+  }
 
   function handleNewGame() {
     game = new Game();

@@ -56,6 +56,25 @@ module.exports.Player = class Player {
       dir: this.dir,
     };
   }
+
+  moveByVector(vector2) {
+    if (this.readyToMove) {
+      if (
+        this.isLegalMove(
+          this.x + vector2.x * this.movementSpeed,
+          this.y + vector2.y * this.movementSpeed,
+          this.currentTankShape
+        )
+      ) {
+        this.x += vector2.x * this.movementSpeed;
+        this.y += vector2.y * this.movementSpeed;
+      }
+    }
+  }
+
+
+
+
 };
 
 function get90degRotatedOriginalShape(matrix, width) {
